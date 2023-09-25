@@ -2,10 +2,15 @@
 GO
 use QLBANCOMTAM 
 go
---Food
+
+--Table
+--rice
+--riceCategory
+--soup
+--soupCategory
 --drink
 --drinkCategory
---Table
+--Food
 --FoodCategory	
 --Account
 --Bill
@@ -32,6 +37,34 @@ go
 create table drinkCategory(
 	id int identity primary key,
 	name nvarchar(99) not null default N'Chưa đặt tên'
+)
+go
+create table riceCategory(
+	id int identity primary key,
+	name nvarchar(99) not null default N'Chưa đặt tên'
+)
+go
+create table soupCategory(
+	id int identity primary key,
+	name nvarchar(99) not null default N'Chưa đặt tên'
+)
+go
+create table rice(
+	id int identity primary key,
+	name nvarchar(99) not null default N'Chưa dặt tên',
+	idCategory int not null,
+	price float not null default 0
+
+	foreign key (idCategory) references dbo.riceCategory(id)
+)
+go
+create table soup(
+	id int identity primary key,
+	name nvarchar(99) not null default N'Chưa dặt tên',
+	idCategory int not null,
+	price float not null default 0
+
+	foreign key (idCategory) references dbo.soupCategory(id)
 )
 go
 create table drink(
@@ -67,10 +100,14 @@ create table billInfo(
 	idBill int not null,
 	idFood int not null,
 	idDrink int not null,
+	idRice int not null,
+	idSoup int not null,
 	count int not null default 0
 
 	foreign key (idBill) references dbo.bill(id),
 	foreign key (idFood) references dbo.food(id),
-	foreign key (idDrink) references dbo.drink(id)
+	foreign key (idDrink) references dbo.drink(id),
+	foreign key (idRice) references dbo.rice(id),
+	foreign key (idSoup) references dbo.soup(id)
 )
 go
